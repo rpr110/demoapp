@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1085474027958",
+    "project_id": "bustling-dynamo-277111",
+    "storage_bucket": "bustling-dynamo-277111.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085474027958:android:1ebad59b1be57f52a02917",
+        "android_client_info": {
+          "package_name": "com.example.second_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085474027958-rspdg4pob4pa46l30u3f4ei4389gm33f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz0MSEa20FQ7q0O6w48rLagHbuaFpUL-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085474027958-rspdg4pob4pa46l30u3f4ei4389gm33f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1085474027958-ci8rj97ml9ggsj98hjc8lumh28d5ahrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ryan.secondApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085474027958:android:26e1b5085d72d3a2a02917",
+        "android_client_info": {
+          "package_name": "com.genisys.flutterintegrationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085474027958-rspdg4pob4pa46l30u3f4ei4389gm33f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz0MSEa20FQ7q0O6w48rLagHbuaFpUL-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085474027958-rspdg4pob4pa46l30u3f4ei4389gm33f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1085474027958-ci8rj97ml9ggsj98hjc8lumh28d5ahrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ryan.secondApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
