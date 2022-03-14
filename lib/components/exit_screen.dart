@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io';
+
 
 import 'default_button.dart';
 // import '../screens/splash/splash_screen.dart';
@@ -36,12 +38,14 @@ class _ExitScreen extends State<ExitScreen> {
   resultMap['verification_result'] = isSuccessfull == true ? 'success':'failure';
   resultMap['message'] = message;
   
-  try{
-    await platform.invokeMethod("flutterCommunicationChannel", resultMap);
-
-  }catch (e){
-    print(e.toString());
+  if(Platform.isAndroid){
+    try{
+      await platform.invokeMethod("flutterCommunicationChannel", resultMap);
+    }catch (e){
+      print(e.toString());
+    }
   }
+
 
 }
   @override
@@ -75,6 +79,7 @@ class _ExitScreen extends State<ExitScreen> {
                 text: "Back to home",
                 press: () async {
                   SystemNavigator.pop();
+                  
                   var res = await _sendResultsToAndroidiOS(isSuccessfull,message);
                   // Navigator.pushNamed(
                   //   context,
