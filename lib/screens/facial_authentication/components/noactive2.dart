@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 import 'dart:math' as Math;
 
 import 'package:flutter_native_image/flutter_native_image.dart';
@@ -810,8 +811,41 @@ bool inPlace = false;
 }
 
 class MyClip extends CustomClipper<Rect> {
+
   Rect getClip(Size size) {
-    return Rect.fromLTWH(25, 140, 350, 550);
+
+    var pixelRatio = window.devicePixelRatio;
+
+    //Size in physical pixels
+    var physicalScreenSize = window.physicalSize;
+    var physicalWidth = physicalScreenSize.width;
+    var physicalHeight = physicalScreenSize.height;
+
+    //Size in logical pixels
+    var logicalScreenSize = window.physicalSize / pixelRatio;
+    var logicalWidth = logicalScreenSize.width;
+    var logicalHeight = logicalScreenSize.height;
+
+    //Padding in physical pixels
+    var padding = window.padding;
+
+    //Safe area paddings in logical pixels
+    var paddingLeft = window.padding.left / window.devicePixelRatio;
+    var paddingRight = window.padding.right / window.devicePixelRatio;
+    var paddingTop = window.padding.top / window.devicePixelRatio;
+    var paddingBottom = window.padding.bottom / window.devicePixelRatio;
+
+    //Safe area in logical pixels
+    var safeWidth = logicalWidth - paddingLeft - paddingRight;
+    var safeHeight = logicalHeight - paddingTop - paddingBottom;
+    Offset center = new Offset(safeWidth/2, safeHeight/2);
+
+    var circleWidth = safeWidth - (0.175 * safeWidth) ;
+    var circleHeight = safeHeight - (0.325 * safeHeight) ;
+
+
+    // return Rect.fromLTWH(25, 140, 350, 550);
+    return Rect.fromCenter(center: center, width: circleWidth ,height: circleHeight);
   }
 
   bool shouldReclip(oldClipper) {
