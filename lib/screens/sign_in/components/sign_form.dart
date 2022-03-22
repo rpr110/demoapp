@@ -90,7 +90,7 @@ class _SignFormState extends State<SignForm> {
                 bool gotToExitScreen = true;
 
                 String username = 'pekla';
-                String password = get_jwt_endpoint_password;
+                String password = general_api_password;
                 String basicAuth =
                     'Basic ' + base64Encode(utf8.encode('$username:$password'));
 

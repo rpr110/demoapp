@@ -48,7 +48,8 @@ const String kAddressNullError = "Please Enter your address";
 //const String endpoint_base_url = "http://ec2-13-245-35-53.af-south-1.compute.amazonaws.com";
 //const String endpoint_base_url = "http://pekla-alb-nigeria-1073326178.af-south-1.elb.amazonaws.com";
 // const String endpoint_base_url = "http://ec2-13-244-90-123.af-south-1.compute.amazonaws.com";
-const String endpoint_base_url = "https://196.6.103.138";
+// const String endpoint_base_url = "https://196.6.103.138";
+const String endpoint_base_url ="https://n-face.nibss-plc.com.ng";
 
 const String register_endpoint = "/pekla/api/registerUser";
 // const String send_otp_endpoint = "/pekla/api/sendOtp";
