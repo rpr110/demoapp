@@ -153,6 +153,15 @@ Future<String> getDeviceData() async {
   return deviceData.toString();
 }
 
+String getDeviceOs(){
+  if(Platform.isAndroid){
+    return "ANDROID";
+  }else if(Platform.isIOS){
+    return "IOS";
+  }
+  return "";
+}
+
 void showToast(BuildContext context, message) {
     Scaffold.of(context).showSnackBar(SnackBar(
           content: Text(message),

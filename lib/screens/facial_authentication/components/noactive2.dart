@@ -509,6 +509,8 @@ bool inPlace = false;
     request.fields['deviceData'] = deviceData;
     request.fields['licenseKey']=licenseKey;
     request.fields['targetFunction']=target;
+    request.fields['device_os']=getDeviceOs();
+    
     request.headers.addAll(headers);
     print("request: " + request.toString());
     // request.send().then((value) => print(value.statusCode));
