@@ -487,7 +487,8 @@ bool inPlace = false;
       Uri.parse(apiEndpoint),
     );
     String username = 'pekla';
-    String password = r'P$KL&(#@412';
+    // String password = r'P$KL&(#@412';
+    String password = general_api_password;
     String basicAuth ='Basic ' + base64Encode(utf8.encode('$username:$password'));
     Map<String, String> headers = {
       "Content-type": "multipart/form-data",
