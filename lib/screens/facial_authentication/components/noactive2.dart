@@ -287,14 +287,14 @@ bool inPlace = false;
                           var path2 = path + '/' + '${DateTime.now()}.jpg';
                           // await _camera.stopImageStream();
                           await _camera.takePicture(path2);
-                          var imageResized =
-                              await FlutterNativeImage.compressImage(path2,
-                                  quality: 100,
-                                  targetWidth: 100,
-                                  targetHeight: 100);
+                          // var imageResized =
+                          //     await FlutterNativeImage.compressImage(path2,
+                          //         quality: 100,
+                          //         targetWidth: 100,
+                          //         targetHeight: 100);
                           await _camera.stopImageStream();
                           await _camera.dispose();
-                          imageBytes = imageResized.readAsBytesSync();
+                          // imageBytes = imageResized.readAsBytesSync();
                           finalImagePath = path2;
                         }
 
