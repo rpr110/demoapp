@@ -85,6 +85,9 @@ class _SignFormState extends State<SignForm> {
                   clickedOnce = true;
                 });
 
+                Navigator.pushNamed(context,"/facial_authentication",
+                  arguments: FacialAuthenticationScreenArguments(bvn, "", json.encode(<String,int>{"active_liveness":0,"passive_liveness":1,"face_compare":1,"otp":0})));
+                /*
                 String exit_screen_message;
                 bool isSucessfull = false;
                 bool gotToExitScreen = true;
@@ -207,7 +210,7 @@ class _SignFormState extends State<SignForm> {
                   Navigator.pushNamed(context,"/exit_screen",
                       arguments: ExitScreenArguments(isSucessfull, exit_screen_message));
                 }
-
+                */
               }
             },
           ),

@@ -49,7 +49,9 @@ const String kAddressNullError = "Please Enter your address";
 //const String endpoint_base_url = "http://pekla-alb-nigeria-1073326178.af-south-1.elb.amazonaws.com";
 // const String endpoint_base_url = "http://ec2-13-244-90-123.af-south-1.compute.amazonaws.com";
 // const String endpoint_base_url = "https://196.6.103.138";
-const String endpoint_base_url ="https://n-face.nibss-plc.com.ng";
+// const String endpoint_base_url ="https://n-face.nibss-plc.com.ng";
+const String endpoint_base_url ="https://api.calcottech.com/faceproof/api/v1";
+
 
 const String register_endpoint = "/pekla/api/registerUser";
 // const String send_otp_endpoint = "/pekla/api/sendOtp";
@@ -62,7 +64,9 @@ const String get_jwt_endpoint = "/pekla/api/nibbs/JwtToken";
 const String send_otp_endpoint = "/pekla/api/sendEmailOtp";
 const String verify_otp_endpoint = "/pekla/api/emailOtpVerify";
 // const String verify_face_endpoint = "/pekla/api/faceRekognition";
-const String verify_face_endpoint = "/pekla/api/nibbs/faceRekognition";
+// const String verify_face_endpoint = "/pekla/api/nibbs/faceRekognition";
+const String verify_face_endpoint = "/face_authentication";
+
 
 const String log_active_liveness_url = "/pekla/api/logActiveLivenessFailure";
 
@@ -71,7 +75,7 @@ const String get_jwt_endpoint_password = "P7=_Q48qEZq4mdC4d@V|d+C1YEVq|0eFuCWM|^
 
 const String general_api_password = "E,,<9,'&)9&@R[uk9agDNQ`hQ+Gt6U2+";
 
-const String licenseKey = "cc278cf163bf11ec93660e5b35aa16f2";
+const String licenseKey = "61EC3118-AB46-4992-9248-86DC48578AC6";
 
 const double appVer = 3.0;
 

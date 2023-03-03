@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:math' as Math;
+import 'dart:developer';
 
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:camera/camera.dart';
@@ -281,6 +284,7 @@ bool inPlace = false;
                           // finalImagePath = pngPath;
                           // // var x = await decodeImageFromList(imageBytes);
                           finalImagePath = path2;
+                          imageBytes = await File(finalImagePath).readAsBytes();
 
                         } else {
                           path = (await getApplicationDocumentsDirectory()).path;
@@ -298,7 +302,7 @@ bool inPlace = false;
                           finalImagePath = path2;
                         }
 
-                        // var photoBase64 = base64Encode(imageBytes);
+                        var photoBase64 = base64Encode(imageBytes);
         
 
                         String jwt_token = jwtToken;
@@ -315,17 +319,19 @@ bool inPlace = false;
                           target = "-1";
                         }
 
-                        target = "2";
+                        target = "3";
 
-                        var res = await sendDataToServer(
-                            api_url, jwt_token, bvn, File(finalImagePath),target);
+                        // var res = await sendDataToServer(
+                        //     api_url, jwt_token, bvn, File(finalImagePath),target);
+                        var res = await sendDataToServer(api_url,licenseKey,bvn,photoBase64);
 
-                        if (res['status'] == 1) {
+
+                        if (res['detail']=="face authentication passed") {
                           Navigator.pushNamed(context,"/exit_screen",
                             arguments: ExitScreenArguments(true, "Face Authentication Success"));
                         } else {
                           Navigator.pushNamed(context,"/exit_screen",
-                            arguments: ExitScreenArguments(false, "Face Authentication Failed"));
+                            arguments: ExitScreenArguments(false, res['detail'].toTitleCase()));
                         }
 
                         setState(() {
@@ -481,49 +487,88 @@ bool inPlace = false;
 }
 
   Future<Map> sendDataToServer(
-      String apiEndpoint, String token, String bvn, File image,String target) async {
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(apiEndpoint),
-    );
-    String username = 'pekla';
-    // String password = r'P$KL&(#@412';
-    String password = general_api_password;
-    String basicAuth ='Basic ' + base64Encode(utf8.encode('$username:$password'));
-    Map<String, String> headers = {
-      "Content-type": "multipart/form-data",
-      "x-access-token": token,
-      "authorization":basicAuth
-    };
-    request.files.add(
-      http.MultipartFile(
-        'Image',
-        image.readAsBytes().asStream(),
-        image.lengthSync(),
-        filename: bvn + "_live.jpg",
-        contentType: MediaType('image', 'jpeg'),
-      ),
-    );
-    var deviceData = await getDeviceData();
-
-    request.fields['BVN'] = bvn;
-    request.fields['deviceData'] = deviceData;
-    request.fields['licenseKey']=licenseKey;
-    request.fields['targetFunction']=target;
-    request.fields['device_os']=getDeviceOs();
+      String apiEndpoint, String license_key, String bvn, String image) async {
     
-    request.headers.addAll(headers);
-    print("request: " + request.toString());
-    // request.send().then((value) => print(value.statusCode));
 
-    final response = await request.send();
 
-    if (response.statusCode != 200) {
-      return {"status": 0};
-    }
-    final res = await http.Response.fromStream(response);
-    return (json.decode(res.body));
+    Map<String, String> payload = {
+      'bvn': bvn,
+      'license_key': license_key,                        
+      'image': image
+    };
+    
+    debugPrint("Payload: " + payload.toString(),wrapWidth:1024*10);
+
+    var key = utf8.encode("\\=P'4RduZ8b/K^5#");
+    var bytes = utf8.encode(jsonEncode(payload));
+    var hmacSha256 = new Hmac(sha256, key); // HMAC-SHA256
+    var digest = hmacSha256.convert(bytes);
+    print(digest.toString());
+
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "X-calcot-signature": digest.toString(),
+    };
+
+    final res = await http.post(
+      apiEndpoint,
+      headers: headers,
+      body: jsonEncode(payload),
+    );
+    var response = json.decode(res.body);
+
+    print(response);
+
+
+    return response;
   }
+
+
+  // Future<Map> sendDataToServer(
+  //     String apiEndpoint, String token, String bvn, File image,String target) async {
+    
+  //   var request = http.MultipartRequest(
+  //     'POST',
+  //     Uri.parse(apiEndpoint),
+  //   );
+  //   String username = 'pekla';
+  //   // String password = r'P$KL&(#@412';
+  //   String password = general_api_password;
+  //   String basicAuth ='Basic ' + base64Encode(utf8.encode('$username:$password'));
+  //   Map<String, String> headers = {
+  //     "Content-type": "multipart/form-data",
+  //     "x-access-token": token,
+  //     "authorization":basicAuth
+  //   };
+  //   request.files.add(
+  //     http.MultipartFile(
+  //       'Image',
+  //       image.readAsBytes().asStream(),
+  //       image.lengthSync(),
+  //       filename: bvn + "_live.jpg",
+  //       contentType: MediaType('image', 'jpeg'),
+  //     ),
+  //   );
+  //   var deviceData = await getDeviceData();
+
+  //   request.fields['BVN'] = bvn;
+  //   request.fields['deviceData'] = deviceData;
+  //   request.fields['licenseKey']=licenseKey;
+  //   request.fields['targetFunction']=target;
+  //   request.fields['device_os']=getDeviceOs();
+    
+  //   request.headers.addAll(headers);
+  //   print("request: " + request.toString());
+  //   // request.send().then((value) => print(value.statusCode));
+
+  //   final response = await request.send();
+
+  //   if (response.statusCode != 200) {
+  //     return {"status": 0};
+  //   }
+  //   final res = await http.Response.fromStream(response);
+  //   return (json.decode(res.body));
+  // }
 
   bool isSmileThresholdOscilate(String str) {
     RegExp exp = new RegExp(r"01");
@@ -647,6 +692,7 @@ bool inPlace = false;
                     await _camera.stopImageStream();
                     await _camera.takePicture(path2);
                     finalImagePath = path2;
+                    imageBytes = await File(finalImagePath).readAsBytes();
 
                   } else {
                     path = (await getApplicationDocumentsDirectory()).path;
@@ -660,11 +706,11 @@ bool inPlace = false;
                             targetHeight: 100);
                     await _camera.stopImageStream();
                     await _camera.dispose();
-                    imageBytes = imageResized.readAsBytesSync();
                     finalImagePath = path2;
                   }
 
                   // var photoBase64 = base64Encode(imageBytes);
+                  // print(photoBase64);
   
 
                   String jwt_token = jwtToken;
@@ -687,8 +733,10 @@ bool inPlace = false;
                   String img64 = base64Encode(bytes);
                   // await save(img64);
 
-                  var res = await sendDataToServer(
-                      api_url, jwt_token, bvn, File(finalImagePath),target);
+                  // var res = await sendDataToServer(
+                  //     api_url, jwt_token, bvn, File(finalImagePath),target);
+                  var res = await sendDataToServer(api_url,licenseKey,bvn,img64);
+
                   
                   // await save(res.toString());
                   

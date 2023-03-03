@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../utlis/size_config.dart';
 import 'sign_form.dart';
 import 'no_account_text.dart';
+import '../../../utlis/constants.dart';
+
 
 
 class Body extends StatelessWidget {
@@ -34,7 +36,14 @@ class Body extends StatelessWidget {
                 SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SizedBox(height: getProportionateScreenHeight(20)),
-                NoAccountText(),
+                Text(
+                  "Faceproof Demp App  \n",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(16),
+                    color: kPrimaryLightColor),
+                )
+                // NoAccountText(),
               ],
             ),
           ),
